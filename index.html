@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文阅读笔记汇总</title>
+<style>
+  :root { --text:#1a1a1a; --text2:#5a5a5a; --bg:#fdfcfa; --border:#e0dcd4; --accent:#8b3a3a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Noto Serif SC","Songti SC",Georgia,serif; background:var(--bg); color:var(--text); line-height:1.7; }
+  .wrap { max-width:980px; margin:0 auto; padding:48px 24px 100px; }
+  .page-header { border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:36px; }
+  h1 { font-size:1.6rem; color:var(--accent); }
+  .sub { font-size:.9rem; color:var(--text2); margin-top:8px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
+  .card { display:block; background:#fff; border:1px solid var(--border); border-radius:6px; padding:18px 20px;
+           text-decoration:none; color:var(--text); transition:box-shadow .15s, border-color .15s; }
+  .card:hover { box-shadow:0 3px 14px rgba(0,0,0,.08); border-color:var(--accent); }
+  .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .pid { font-weight:bold; color:var(--accent); }
+  .year { font-size:.8rem; color:var(--text2); border:1px solid var(--border); border-radius:12px; padding:1px 10px; }
+  .card h2 { font-size:1.02rem; line-height:1.5; margin-bottom:10px; }
+  .tag { display:inline-block; font-size:.78rem; color:var(--text2); background:#f9f7f2; border:1px solid var(--border); border-radius:4px; padding:2px 10px; }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>论文阅读笔记汇总</h1>
+      <p class="sub">P1–P9 红外焊接方向论文精读笔记 · 共 9 篇</p>
+    </div>
+    <div class="grid">
+      <a class="card" href="P1_adrc_prototype_2025.html">
+        <div class="card-top"><span class="pid">P1</span><span class="year">2025</span></div>
+        <h2>基于自抗扰控制结构的红外电子器件焊接原型系统</h2>
+        <span class="tag">ADRC 原型</span>
+      </a>
+      <a class="card" href="P2_ir_heat_source_2017.html">
+        <div class="card-top"><span class="pid">P2</span><span class="year">2017</span></div>
+        <h2>红外热源在电子模块贴装与拆装中的对比效能</h2>
+        <span class="tag">红外热源对比</span>
+      </a>
+      <a class="card" href="P3_heat_flow_direction_2018.html">
+        <div class="card-top"><span class="pid">P3</span><span class="year">2018</span></div>
+        <h2>热流方向对焊球界面层的影响</h2>
+        <span class="tag">热流方向</span>
+      </a>
+      <a class="card" href="P4_fpcb_tabletop_furnace_2021.html">
+        <div class="card-top"><span class="pid">P4</span><span class="year">2021</span></div>
+        <h2>红外台式再流焊炉中 FPCB 基板的再流焊工艺研究</h2>
+        <span class="tag">FPCB 台式炉</span>
+      </a>
+      <a class="card" href="P5_variable_irradiation_mask_2021.html">
+        <div class="card-top"><span class="pid">P5</span><span class="year">2021</span></div>
+        <h2>可变辐照掩模在电子元件聚焦红外光焊接系统中的效应</h2>
+        <span class="tag">可变辐照掩模</span>
+      </a>
+      <a class="card" href="P6_numerical_modeling_2023.html">
+        <div class="card-top"><span class="pid">P6</span><span class="year">2023</span></div>
+        <h2>再流焊应用数值建模方法综述</h2>
+        <span class="tag">数值建模方法</span>
+      </a>
+      <a class="card" href="P7_pulsed_light_soldering_2023.html">
+        <div class="card-top"><span class="pid">P7</span><span class="year">2023</span></div>
+        <h2>强脉冲光焊接工艺用于提升 Sn–3.0Ag–0.5Cu 球栅阵列封装的跌落冲击可靠性</h2>
+        <span class="tag">脉冲光焊</span>
+      </a>
+      <a class="card" href="P8_low_cost_reflow_2025.html">
+        <div class="card-top"><span class="pid">P8</span><span class="year">2025</span></div>
+        <h2>利用近红外 LED 实现低成本电子器件的回流焊</h2>
+        <span class="tag">低成本电子回流焊</span>
+      </a>
+      <a class="card" href="P9_flexible_hybrid_electronics_2023.html">
+        <div class="card-top"><span class="pid">P9</span><span class="year">2023</span></div>
+        <h2>近红外辐射辅助焊接用于柔性混合电子（FHE）</h2>
+        <span class="tag">柔性混合电子焊接</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

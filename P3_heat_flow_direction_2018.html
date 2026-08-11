@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>热流方向对焊球界面层的影响</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$'], ['\\[','\\]']], tags: 'none', linebreaks: { automatic: true, width: 'container' } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root {
+    --text: #1a1a1a; --text-secondary: #5a5a5a;
+    --bg: #fdfcfa; --surface: #ffffff;
+    --border: #e0dcd4; --accent: #8b3a3a;
+    --highlight-box: #faf6ef; --highlight-border: #d4a843;
+    --radius: 6px;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+    font-size: 16px; line-height: 1.85; color: var(--text);
+    background: var(--bg); -webkit-font-smoothing: antialiased;
+  }
+  .layout { display:flex; max-width:1200px; margin:0 auto; }
+  .toc-sidebar {
+    width: 230px; flex-shrink:0; position:sticky; top:0; height:100vh;
+    overflow-y:auto; padding:28px 18px; background:#f9f7f2;
+    border-right:1px solid var(--border); font-size:.82rem;
+  }
+  .toc-sidebar h4 { font-size:.78rem; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:.05em; }
+  .toc-sidebar a { display:block; padding:2px 0; color:var(--text-secondary); text-decoration:none; }
+  .toc-sidebar a:hover { color:var(--accent); }
+  .toc-sidebar .toc-h3 { padding-left:14px; font-size:.78rem; }
+  .content { flex:1; min-width:0; padding:36px 44px 100px; max-width:820px; }
+
+  .page-header { border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:32px; }
+  .page-header h1 { font-family: "Noto Serif SC", "Songti SC", Georgia, serif; font-size:1.65rem; color:var(--accent); line-height:1.3; }
+  .page-header .sub { font-size:.87rem; color:var(--text-secondary); margin-top:6px; }
+  .page-header .cite { font-size:.8rem; color:#999; margin-top:4px; }
+  .page-header .journal-info { font-size:.8rem; margin-top:4px; }
+  .page-header .journal-info .badge { display:inline-block; padding:1px 8px; border-radius:3px; font-size:.75rem; font-weight:600; margin-right:4px; }
+  .page-header .journal-info .badge-scie { background:#e8f0fe; color:#1a56c4; }
+  .page-header .journal-info .badge-esci { background:#fef3e8; color:#c47a1a; }
+  .page-header .journal-info .badge-ei { background:#e8f8ee; color:#2a8c3e; }
+  .page-header .journal-info .badge-delisted { background:#fde8e8; color:#c41a1a; }
+  .page-header .journal-info .if-val { color:var(--accent); font-weight:600; }
+  .page-header .meta { font-size:.78rem; color:#aaa; margin-top:2px; font-family:monospace; word-break:break-all; }
+  .page-header .meta a { color:#aaa; text-decoration:none; }
+  .page-header .meta a:hover { color:var(--accent); text-decoration:underline; }
+  .page-header .keywords { font-size:.82rem; color:var(--text-secondary); margin-top:6px; }
+  .page-header .keywords strong { color:var(--accent); }
+
+  h2 { font-family: "Noto Serif SC", "Songti SC", Georgia, serif; font-size:1.2rem; color:var(--accent); margin:40px 0 10px; padding-bottom:4px; border-bottom:1px solid var(--border); }
+  h3 { font-family: "Noto Serif SC", "Songti SC", Georgia, serif; font-size:1.02rem; font-weight:600; color:#5a2d2d; margin:26px 0 8px; }
+
+  figure { margin:22px 0; text-align:center; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  figure img { max-width:100%; height:auto; border-radius:4px; cursor:zoom-in; transition:box-shadow .2s; }
+  figure img:hover { box-shadow:0 4px 16px rgba(0,0,0,.12); }
+  figcaption { margin-top:10px; font-size:.83rem; color:var(--text-secondary); font-style:italic; line-height:1.5; }
+
+  .figure-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0; }
+  .figure-row figure { margin:0; }
+
+  .math-block { margin:16px 0; padding:12px 18px; background:#f4f1ea; border-left:3px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; overflow:visible; }
+  .math-note { font-size:.87rem; color:var(--text-secondary); margin-top:-6px; margin-bottom:12px; padding-left:8px; }
+
+  .insight { margin:18px 0; padding:16px 20px; background:var(--highlight-box); border:1px solid var(--highlight-border); border-radius:var(--radius); box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .insight .label { display:inline-block; font-size:.78rem; font-weight:700; color:#8b6914; background:#fef3d6; padding:2px 10px; border-radius:3px; margin-bottom:10px; letter-spacing:.05em; }
+  .insight p { margin:5px 0; }
+  .insight ul, .insight ol { margin:5px 0 5px 18px; }
+  .insight li { margin-bottom:2px; }
+
+  .key-term { font-weight:600; color:#8b3a3a; }
+
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.9rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  thead tr { background:var(--accent); color:#fff; }
+  thead th { padding:7px 12px; font-weight:600; text-align:left; }
+  tbody td { padding:7px 12px; border-bottom:1px solid var(--border); }
+  tbody tr:nth-child(even) { background:#f9f7f2; }
+  table caption { caption-side:top; font-size:.83rem; color:var(--text-secondary); font-style:italic; margin-bottom:6px; text-align:left; }
+
+  .back-to-top { position:fixed; bottom:24px; right:24px; width:40px; height:40px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:40px; font-size:1.2rem; cursor:pointer; opacity:.7; transition:opacity .2s; text-decoration:none; z-index:99; }
+  .back-to-top:hover { opacity:1; }
+
+  .lightbox { display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.88); cursor:zoom-out; justify-content:center; align-items:center; padding:24px; }
+  .lightbox.active { display:flex; }
+  .lightbox img { max-width:95vw; max-height:95vh; object-fit:contain; border-radius:4px; }
+  .lightbox-close { position:absolute; top:16px; right:24px; color:#fff; font-size:2rem; cursor:pointer; opacity:.6; transition:opacity .2s; }
+  .lightbox-close:hover { opacity:1; }
+
+  @media (max-width: 860px) { .toc-sidebar { display:none; } .content { padding:24px 20px 60px; } }
+  @media print {
+    .lightbox, .back-to-top, .toc-sidebar { display:none; }
+    body { max-width:100%; font-size:12pt; background:#fff; }
+    .insight { box-shadow:none; border:1px solid #ccc; }
+    .content { padding:0; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc-sidebar">
+  <h4>Paper Navigator</h4>
+  <a href="#abs">研究摘要</a>
+  <a href="#s1">1. 引言</a>
+  <a href="#s2">2. 理论基础</a>
+  <a href="#s3">3. 实验</a>
+  <a href="#s3a" class="toc-h3">3.1 设备与回流焊</a>
+  <a href="#s4">4. 界面层分析</a>
+  <a href="#s5">5. 结果</a>
+  <a href="#s6">6. 讨论</a>
+  <a href="#s7">7. 结论</a>
+  <a href="#ack">致谢</a>
+  <a href="#sum">核心要点总结</a>
+  <a href="#refs">参考文献</a>
+</nav>
+
+<main class="content">
+
+<header class="page-header">
+  <h1>热流方向对焊球界面层的影响</h1>
+  <p class="sub">Influence of heat flow direction on solder ball interfacial layer</p>
+  <p class="cite">Alexandr Otáhal, Ivan Szendiuch - <em>Journal of Electrical Engineering</em> 2018, Vol. 69(4): 305–310 — Department of Microelectronics, Brno University of Technology, Brno, Czech Republic</p>
+  <p class="journal-info"><span class="badge badge-scie">SCIE Q3</span> IF=<span class="if-val">1.7</span></p>
+  <p class="meta"><a href="https://doi.org/10.2478/jee-2018-0043" target="_blank">DOI: 10.2478/jee-2018-0043</a> | 收稿: 2018-06-26 | 出版: 2018-09-19</p>
+  <p class="keywords"><strong>关键词：</strong>BGA 封装（BGA package）；回流焊（reflow soldering）；红外加热器（infrared heater）；热流方向（heat flow direction）；金属间化合物界面层（intermetallic interfacial layer）</p>
+</header>
+
+<!-- ═══════════ ABSTRACT ═══════════ -->
+<h2 id="abs">研究摘要</h2>
+<p>本文研究 BGA 封装<span class="key-term">植球工艺（ball-attach process）</span>中，从三个热流方向（底部、顶部、双侧红外加热）焊接的 SAC305 焊球<span class="key-term">金属间化合物界面层（intermetallic interfacial layer, IMC）</span>的差异。主要发现如下：</p>
+<ul>
+  <li>实验采用自制「Power Tower」红外焊接台，对 dummy BGA 样品分别以底部（bottom IR）、顶部（top IR）与双侧（both IR）红外加热器完成植球焊接。</li>
+  <li>样品经金相截面 + 选择性腐蚀处理后，用光学显微成像与 ImageJ 图像分析量化 IMC 层的平均厚度（MSL）与均方根粗糙度（R<sub>rms</sub>）。</li>
+  <li>底部加热样品的 IMC 层最薄（1.641 µm）、粗糙度最小（0.901 µm）；顶部加热样品最厚（2.715 µm）；双侧加热样品居中（2.573 µm），但粗糙度最大（1.628 µm）。</li>
+  <li>作者提出主要机理假设：熔融焊料内的<span class="key-term">热迁移（thermomigration）</span>——焊球内热梯度使 Cu 向热端、Sn 向冷端迁移，造成不同加热方向下 IMC 层厚度与粗糙度的系统差异。</li>
+</ul>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>为什么 IMC 层「越薄越好」：</strong>IMC 是焊料与焊盘之间冶金反应的必然产物，适度厚度的 IMC 层正是良好冶金结合的标志；但 IMC 本身硬而脆，过厚会使焊点机械抗力下降，在冲击与热循环载荷下更易开裂。更关键的是，IMC 是累积性的——每经历一次回流工艺，(Cu,Ni)<sub>6</sub>Sn<sub>5</sub> 与 (Ni,Cu)<sub>3</sub>Sn<sub>4</sub> 都会继续增厚。因此植球/重植球（reballing）这类「焊球先焊一次、上板再焊一次」的多重回流场景中，控制每一步的 IMC 生长对最终焊点可靠性至关重要——这正是本文研究热流方向对 IMC 影响的工程动机。</p>
+</div>
+
+<!-- ═══════════ 1. INTRODUCTION ═══════════ -->
+<h2 id="s1">1. 引言</h2>
+<p><span class="key-term">球栅阵列（Ball Grid Array, BGA）</span>与 QFN 等封装结构多样、各有优劣。就焊接工艺及其带来的质量与可靠性问题而言，BGA、QFN 等封装挑战最大——焊盘数量多、尺寸小、<span class="key-term">间距（pitch）</span>窄。本文聚焦 BGA 封装的植球工艺（即重植球工艺），采用<span class="key-term">焊球预制件（solder ball preform）</span>在焊盘上预置焊球。</p>
+<p>BGA 焊点的可靠性取决于焊接工艺中的一系列因素：材料兼容性、封装与 PCB 的合理设计、焊料温度曲线等，这些参数已有大量文献讨论。然而有一个参数在研究中仍被忽视——<strong>焊接过程中的<span class="key-term">热流方向（heat flow direction）</span></strong>。本文即从植球/重植球工艺的角度考察其重要性，聚焦于金属间化合物层的厚度与粗糙度。</p>
+<p>植球工艺中 IMC 层的厚度与粗糙度应尽可能小，因为 (Cu,Ni)<sub>6</sub>Sn<sub>5</sub> 与 (Ni,Cu)<sub>3</sub>Sn<sub>4</sub> 会随每一次回流工艺而增厚 [1, 2]。若 BGA 上板焊接不充分，IMC 层厚度将直接降低最终焊点的可靠性。植球与重植球工艺影响 BGA 的最终焊点质量，因此本研究有助于保障 BGA 焊点的可靠性与耐久性。</p>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>为什么「热流方向」值得单独研究：</strong>回流焊的常规工艺参数（峰值温度、液相线以上时间、冷却速率等）描述的是「温度-时间」曲线，隐含假设样品内部温度均匀。但红外加热（尤其局部/选择性加热）本质上是辐射传热——辐射直射面先升温、阴影面靠热传导后升温，焊球内部因此存在明显温度梯度与方向性热流。BGA 植球时焊球既可能被顶部辐射直接加热，也可能只被底部热源透过基板间接加热，二者在焊球内产生方向完全不同的热梯度。这种梯度会驱动原子迁移（热迁移），从物理机制上足以改变 IMC 的形核与生长，因此值得作为独立工艺变量研究。</p>
+</div>
+
+<!-- ═══════════ 2. THEORY ═══════════ -->
+<h2 id="s2">2. 理论基础</h2>
+<p>焊接过程中影响焊点质量的因素众多。就 SAC305 焊料合金的 IMC 层与<span class="key-term">金属间化合物（intermetallic compounds, IMCs）</span>而言，已识别出若干影响其形成与生长的基本参数。焊接过程第一阶段发生<span class="key-term">形核（nucleation）</span>，晶核是冷却阶段晶体生长的基础。对 SAC305/ENIG 材料组合，IMC 的形成与生长依赖于关键的<span class="key-term">活化能（activation energy）</span>。</p>
+<p>η 相（Cu<sub>6</sub>Sn<sub>5</sub>）的形成显著快于 ε 相（Cu<sub>3</sub>Sn），因为焊接表面与熔融焊料之间的驱动力更大 [3]。同理，由 Ni、Cu、Sn 组成的三元 IMC 中，(Cu,Ni)<sub>6</sub>Sn<sub>5</sub> 的生长快于 (Ni,Cu)<sub>3</sub>Sn<sub>4</sub> [4, 5]。焊接过程中更高的热流使 IMC 形成更快；长期暴露于较高温度（如反复经历焊接工艺）会使 IMC 层增厚 [1, 2]。IMC 厚度主要影响接头的机械强度——超过某一厚度后，机械抗力下降 [6, 7]，因此必须保护焊点免受过量加热与多次焊接工艺的累积影响。</p>
+<p>然而，焊接过程中热流方向这一参数尚未被充分探索。热流方向可能显著影响焊点结构：Wang 与 Panton 报道了不同热流与冷却方向下焊球内空洞数量的减少 [8]；另一项研究直接考察了温度梯度对 IMC 层（Cu<sub>6</sub>Sn<sub>5</sub>、Cu<sub>3</sub>Sn）厚度的影响——由于焊料合金元素的热迁移，热端 IMC 更薄、冷端更厚 [9]。基于这些文献，作者提出了「热流方向影响球形焊点结构」的假设。</p>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>IMC 相生长动力学：η 相为何快于 ε 相：</strong>Cu<sub>6</sub>Sn<sub>5</sub>（η 相）是 Sn 与 Cu 反应的第一产物，其形核能垒低、生长驱动力大，在回流初期占据主导；Cu<sub>3</sub>Sn（ε 相）需在 Cu 侧通过固态扩散进一步反应形成，生长缓慢。ENIG 焊盘上 Ni 参与反应后形成 (Cu,Ni)<sub>6</sub>Sn<sub>5</sub> 等三元相，其生长同样优先于富 Ni 的 (Ni,Cu)<sub>3</sub>Sn<sub>4</sub>。对工艺而言，这意味着「液相线以上时间」越长、热输入越大，IMC 层就越厚——而热流方向决定了同样温度曲线下焊球真实吸收的热量，这正是本文测量的物理基础。</p>
+</div>
+
+<!-- ═══════════ 3. EXPERIMENTS ═══════════ -->
+<h2 id="s3">3. 实验</h2>
+<p>实验的核心装置是「Power Tower」焊接台（图 1）：由两个 80 × 80 mm 陶瓷<span class="key-term">红外加热器（infrared heater, IR heater）</span>（嵌入不锈钢外壳、水平对置放置）与一个 80 × 80 mm 冷却风扇构成，用于实现不同的焊接加热方向。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/e51a958447fc790088f47eb6a3503e34559576ad4e6fee1246fb312230328363.jpg" alt="Fig 1" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 1 &mdash; 「Power Tower」焊接台：两个红外加热器与一个冷却风扇</figcaption>
+</figure>
+<p>为考察热流方向对焊球 IMC 层的影响，设计了三种红外加热器布置方案（图 2）：第一种仅由底部加热器供热——底部红外加热（bottom IR，图 2a）；第二种由顶部加热器供热——顶部红外加热（top IR，图 2b）；第三种两个红外加热器同时工作——双侧红外加热（both IR，图 2c）。三种加热器的位置布置及其热效应如图 2 所示。</p>
+<div class="figure-row">
+  <figure>
+    <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/b0a2093ced6814097a842eead546739601a2786f8aa7c3b30224762825afc196.jpg" alt="Fig 2a" loading="lazy"
+         onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+    <figcaption>(a) 底部红外加热（bottom IR）</figcaption>
+  </figure>
+  <figure>
+    <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/787db29630149d5a0860491c1a5e2b9540189fb9c992b277782ad7a56e7b71ee.jpg" alt="Fig 2b" loading="lazy"
+         onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+    <figcaption>(b) 顶部红外加热（top IR）</figcaption>
+  </figure>
+</div>
+<figure style="margin:0;margin-top:14px;">
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/017e6c03038cedba38cdcebe0a48e854935a209088dbf3804881bdab9ff6d1b3.jpg" alt="Fig 2c" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>(c) 双侧红外加热（both IR）</figcaption>
+</figure>
+<figcaption style="text-align:center;margin-top:-4px;margin-bottom:20px;font-size:.83rem;color:var(--text-secondary);font-style:italic;">图 2 &mdash; (a) 底部红外加热; (b) 顶部红外加热; (c) 双侧红外加热</figcaption>
+<p>组装好的 dummy BGA 样品使用 Power Tower 焊接台完成植球。焊接温度曲线依据 SAC305 焊球与 SMF-08 助焊剂制造商（NeVo，Shenmao Technology Inc.）的建议优化。曲线设计的主要准则是：三种加热方向的<strong>基础参数保持一致</strong>（图 3），熔点以虚线标出。温度由位于 dummy BGA 顶部的 K 型热电偶测量——该位置特意模拟选择性焊接工艺的常见做法（反馈温度传感器置于封装或 PCB 顶部），焊接温度由 PID 控制器调节。</p>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>红外加热为何适合「热流方向」实验：</strong>与热风对流焊不同，红外辐射具有强方向性——辐射能量沿视线传播，可以被遮挡、反射与选择性吸收。将加热器放在样品上方、下方或双侧，焊球受到的辐射路径截然不同：顶部加热时辐射直接照射焊球与封装顶面，底部加热时辐射必须先被 PCB/基板吸收再经热传导到达焊球。于是「焊球内部热梯度的方向」被干净地分离出来，成为唯一变量；而热风焊中气流方向与湍流使这一变量难以控制。黑色阻焊层（下文）进一步强化了对红外辐射的吸收，保证热输入主要来自辐射而非对流。</p>
+</div>
+
+<h3 id="s3a">3.1 设备与回流焊</h3>
+<p>与 IMC 形成和生长相关的温度曲线基础参数汇总于表 1。除基础参数外，还计算了<span class="key-term">加热因子（heating factor, Q<sub>η</sub>）</span>——该参数用于与既往及后续研究进行对比，其计算表达式为 [10]：</p>
+<div class="math-block">$$Q_{\eta} = \int_{t_2}^{t_1} \bigl(T(t_1) - T_{\mathrm{m}}\bigr)\,\mathrm{d}t \tag{1}$$</div>
+<p class="math-note"><strong>解读：</strong>加热因子 Q<sub>η</sub> 是回流曲线中「液相线以上温度对时间的积分」，即温度曲线超过熔点 T<sub>m</sub> 部分的面积，用于定量刻画一次回流对 IMC 生长的总热输入。t<sub>1</sub> 为积分起始时间、t<sub>2</sub> 为积分结束时间。需注意原文此处存在排版笔误：被积函数写作 T(t<sub>1</sub>) 且积分上下限与 t<sub>1</sub>/t<sub>2</sub> 的定义相互颠倒，按物理含义应为对熔融时间段内 T(t)−T<sub>m</sub> 的积分。本文所用回流曲线的加热因子为 308 s·°C。</p>
+<table>
+  <caption>表 1. 温度曲线参数（原文 Table 1）</caption>
+  <thead><tr><th>参数</th><th>单位</th><th>数值</th></tr></thead>
+  <tbody>
+    <tr><td>升温至峰值速率（Ramp up rate to peak temperature）</td><td>°C/s</td><td>1.2</td></tr>
+    <tr><td>最高温度（Maximum temperature）</td><td>°C</td><td>235</td></tr>
+    <tr><td>冷却速率（Cooling）</td><td>°C/s</td><td>4</td></tr>
+    <tr><td>液相线以上时间（Time above liquidus）</td><td>s</td><td>30</td></tr>
+    <tr><td>加热因子（Heating factor）</td><td>s·°C</td><td>308</td></tr>
+  </tbody>
+</table>
+<p>焊接温度曲线如图 3 所示。回流焊完成后，样品经树脂镶嵌并制作<span class="key-term">金相截面（metallographic cross-section）</span>，随后进行<span class="key-term">选择性腐蚀（selective etching）</span>以凸显焊料与焊盘之间的界面——即 IMC 层。选择性腐蚀按 IPC-TM-650 2.1.1（金相制样，手动或半自动方法）执行，腐蚀液为 94 % 乙醇、4 % 硝酸（HNO<sub>3</sub>）与 2 % 盐酸（HCl）的混合溶液，室温下进行（原文化学式 C<sub>5</sub>H<sub>5</sub>OH 疑为 OCR 误识，按腐蚀工艺惯例应为乙醇 C<sub>2</sub>H<sub>5</sub>OH）。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/22a9d84789a7ecdb833a71bec162eaefc6765cf2e87696d44dc464c70e619dd8.jpg" alt="Fig 3" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 3 &mdash; 三种回流焊工况的温度曲线（虚线标记熔点）</figcaption>
+</figure>
+<p>本文使用的 BGA 样品即 dummy BGA（图 4），设计目标是尽量贴近实际制造过程中与 PCB 相关的 BGA 封装参数，设计依据为 IPC-7351B 标准的推荐值。dummy BGA 采用 FR4 基材并覆<strong>黑色阻焊层</strong>——黑色阻焊层可更好地吸收加热元件的红外辐射，且表面比常用绿色阻焊层更粗糙、更无光。dummy BGA 尺寸为 11 × 11 × 1.5 mm，焊盘直径 400 µm（配合所用 500 µm 焊球），表面处理为<span class="key-term">化学镍浸金（electroless nickel – immersion gold, ENIG）</span>。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/e4a47634629264b5f4146d165586d0279a54d4c77d111a4637294a47d812df82.jpg" alt="Fig 4" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 4 &mdash; 组装好焊球、待进行焊接工艺的 dummy BGA 样品</figcaption>
+</figure>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>黑色阻焊层与 400/500 µm 焊盘-焊球比的设计逻辑：</strong>红外焊接的能量耦合取决于表面发射率与吸收率——黑色、粗糙、无光的阻焊层比常规绿色阻焊层吸收率更高，能显著提高底部加热时的传热效率，放大「热流方向」这一变量的效应。焊盘直径 400 µm 略小于 500 µm 焊球，保证焊球坐落在焊盘上后仍有可见的润湿边，便于在截面中观察 IMC 层的完整形貌。ENIG 表面处理（Ni 层上覆极薄 Au 层）则提供平整、抗氧化、可焊性良好的焊盘基底——Au 在焊接中迅速溶入焊料，实际参与 IMC 反应的是其下的 Ni 层，这也是截面中能观察到 Ni-P 层的原因。</p>
+</div>
+
+<!-- ═══════════ 4. ANALYSIS ═══════════ -->
+<h2 id="s4">4. 界面层分析</h2>
+<p>截面样品在焊料-焊盘界面区域拍摄光学显微照片，随后使用 ImageJ 软件进行计算机图像分析，确定 IMC 层的厚度与粗糙度。首先确定<span class="key-term">均值表面水平（Mean Surface Level, MSL）</span>——利用 IMC 层面积 A 与其长度 L 计算的平均厚度 [11]：</p>
+<div class="math-block">$$MSL = \frac{A}{L} \tag{2}$$</div>
+<p class="math-note"><strong>解读：</strong>MSL 把截面图中形状不规则的 IMC 层「摊平」为平均高度：面积 A 除以沿界面方向的长度 L，等价于厚度曲线的平均值。它是后续粗糙度计算的基准面——粗糙度衡量的是 IMC 层表面相对该平均基准的起伏。</p>
+<p>由 MSL 出发计算粗糙度时，需要对焊盘衬底层（铜上的镍层）进行不平整度校正。该校正是为获得更准确的结果：下述有效表面粗糙度公式适用于衬底层平整的被测层。均方根粗糙度按如下公式计算 [11, 12]：</p>
+<div class="math-block">$$R_{\mathrm{rms}} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}Z_{i}^{2}} \tag{3}$$</div>
+<p class="math-note"><strong>解读：</strong>R<sub>rms</sub>（均方根粗糙度，root mean square roughness）是 IMC 表面轮廓相对 MSL 基准的高度偏差 Z<sub>i</sub> 的均方根，N 为测量值总数、i 为测量点序号。与算术平均偏差相比，均方根对尖峰与深谷更敏感，能更精确地刻画 IMC 层表面形貌的统计特征——这正是本文选用该指标描述 IMC 层的原因。</p>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>为什么粗糙度与厚度要分开测：</strong>IMC 层厚度决定焊点的冶金结合强度，而粗糙度反映 IMC 层与焊料/焊盘的机械互锁与界面形貌。厚而粗糙的 IMC 层往往意味着剧烈的冶金反应与不均匀生长（局部过厚、枝晶化），在热循环中应力集中更严重。本文用 MSL 与 R<sub>rms</sub> 两个统计量分别刻画「量」与「形」，并在后续将二者对照三种热流方向讨论——粗糙度与厚度的同步变化趋势本身也是重要结论。</p>
+</div>
+
+<!-- ═══════════ 5. RESULTS ═══════════ -->
+<h2 id="s5">5. 结果</h2>
+<p>图 5、图 6 与图 7 分别给出 Bottom IR、Top IR 与 Both IR 三种样品的焊料-焊盘界面显微照片。除铜层与 IMC 层外，还可观察到<span class="key-term">镍磷层（Ni-P layer）</span>。三种样品的 IMC 层在厚度与粗糙度上呈现出肉眼可见的差异，本文将通过计算进一步量化。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/8fc0b5e6517827c43f5c13137e2d4f1663006d1611b7e1daa58125c19ea58e3e.jpg" alt="Fig 5" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 5 &mdash; Bottom IR 样品的焊料-焊盘界面</figcaption>
+</figure>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/f896aca4d08284d6b818bff3b39fd17c514acda05c9958dfa03ba398077f6668.jpg" alt="Fig 6" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 6 &mdash; Top IR 样品的焊料-焊盘界面</figcaption>
+</figure>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/de37866f55e15a99313cdf17123177e9daa19bfd7b509c85271f7429e350e97f.jpg" alt="Fig 7" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 7 &mdash; Both IR 样品的焊料-焊盘界面</figcaption>
+</figure>
+<p>为验证 IMC 层的成分，使用集成在 Tescan MIRA II 电子显微镜中的<span class="key-term">能量色散谱（Energy Dispersive Spectroscopy, EDS）</span>方法进行元素分析，扫描区域如图 8 中黄色箭头所示。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/08f858e48c3e18b8ac00cdcc7c493b5b6af57d8969eb538caf91d31905ba02c2.jpg" alt="Fig 8" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 8 &mdash; EDS/SEM 扫描区域（黄色箭头）</figcaption>
+</figure>
+<p>EDS 分析结果如图 9 所示。图 8 中的黄色箭头与图 9a 中 SEM 图像上的箭头一致，指示 x 轴分析方向——0 对应箭头起点，10.5 对应箭头终点。图 9b 显示铜、镍、磷、锡元素在焊料与铜表面之间 IMC 层内的分布与占比，各层均有标注：焊盘铜层（Cu）、镍磷层（ENIG，Ni-P）、金属间化合物层（IMC）与焊料。</p>
+<div class="figure-row">
+  <figure>
+    <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/5dc22abc6dd5aae1741cc4b80015ace07bafac3eb47408d2da8fd1aa52e38479.jpg" alt="Fig 9a" loading="lazy"
+         onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+    <figcaption>(a) SEM 显微照片</figcaption>
+  </figure>
+  <figure>
+    <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/83ad5f2ba4d3b9a6372353ff3f01fabec76b2f518b4b11578b60460514b95822.jpg" alt="Fig 9b" loading="lazy"
+         onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+    <figcaption>(b) EDX 线扫描图</figcaption>
+  </figure>
+</div>
+<figcaption style="text-align:center;margin-top:-4px;margin-bottom:20px;font-size:.83rem;color:var(--text-secondary);font-style:italic;">图 9 &mdash; (a) 焊料与焊盘之间界面层的 SEM 显微照片; (b) 界面层的 EDX 线扫描元素分布图</figcaption>
+<p>本研究的主体工作是确定三种加热方向下 IMC 层的均值表面水平与均方根粗糙度。三种红外发射器布置下 IMC 层厚度的图形化结果如图 10 所示：仅底部红外加热的样品厚度最小，为 1.641 µm；双侧加热样品为 2.573 µm，更接近顶部加热样品的数值；最大厚度 2.715 µm 出现在顶部加热样品。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/e3a88e229ae7835a0795f9cb03568e10cc595122692f2c9a94c0471edc04e70c.jpg" alt="Fig 10" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 10 &mdash; 三种红外加热器布置（bottom IR、top IR、both IR）下的 IMC 层厚度</figcaption>
+</figure>
+<p>IMC 层的均方根粗糙度如图 11 所示。Bottom IR 样品的粗糙度最小（0.901 µm），与图 5、图 6、图 7 的显微照片一致；Top IR 样品为 1.296 µm；Both IR 样品最大，平均粗糙度 1.628 µm——光学显微镜检查同样确认了后两者的结果。</p>
+<figure>
+  <img src="https://raw.githubusercontent.com/white-drizzle/infrared-soldering-lit-review/main/reading-notes/P3_heat_flow_direction_2018/images/9f248685862e787d2343bdbb3127a4cda26c97b0e24e61cf680d909e938027c3.jpg" alt="Fig 11" loading="lazy"
+       onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('active')"
+       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f2eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3EFigure%20unavailable%3C/text%3E%3C/svg%3E'">
+  <figcaption>图 11 &mdash; 三种红外加热器布置下的 IMC 层粗糙度</figcaption>
+</figure>
+<table>
+  <caption>整理表 A. 三种加热方向下 IMC 层厚度与粗糙度对比（据原文第 5 节整理）</caption>
+  <thead><tr><th>加热方向</th><th>IMC 层平均厚度 MSL（µm）</th><th>IMC 层均方根粗糙度 R<sub>rms</sub>（µm）</th></tr></thead>
+  <tbody>
+    <tr><td>Bottom IR（底部加热）</td><td>1.641</td><td>0.901</td></tr>
+    <tr><td>Top IR（顶部加热）</td><td>2.715</td><td>1.296</td></tr>
+    <tr><td>Both IR（双侧加热）</td><td>2.573</td><td>1.628</td></tr>
+  </tbody>
+</table>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>EDS/EDX 线扫描如何确认界面分层：</strong>EDS 通过测量特征 X 射线能量识别元素种类与含量；线扫描（line scan）沿图 9a 中箭头方向逐点采集，得到各元素沿位置的浓度曲线。图中可清晰看到分层结构：焊盘侧 Cu 含量高，经过 Ni-P（ENIG）层时镍磷信号上升，IMC 层内 Cu/Ni/Sn 共存（即 (Cu,Ni)<sub>6</sub>Sn<sub>5</sub> 类相），进入焊料区后 Sn 占主导。这一验证说明：IMC 层确实是焊料中 Sn 与焊盘 Cu/Ni 相互扩散反应的产物，其后厚度与粗糙度测量才有明确的物理对象。</p>
+</div>
+
+<!-- ═══════════ 6. DISCUSSION ═══════════ -->
+<h2 id="s6">6. 讨论</h2>
+<p>焊料-铜界面分析结果表明，三种加热方向下 IMC 层的厚度与粗糙度存在明显差异。可能影响测试结果的基础参数之一是焊接温度曲线。为精确验证温度曲线的设置是否正确，本文采用加热因子计算来帮助从可靠性控制、可重复性、焊接过程与焊点质量角度优化回流曲线 [2, 13–15]。</p>
+<p>IMC 层厚度的差异部分源于反馈热电偶的位置——热电偶固定在样品顶部。三种工况的焊接曲线参数完全一致，但热流强度受红外加热器位置与反馈热电偶位置的影响：使用顶部红外加热器（top IR 与 both IR）时，焊球被直接加热；而使用底部红外加热器（bottom IR）时，焊球只能透过 dummy BGA 间接加热。</p>
+<p>另一个可能影响 IMC 层厚度（尤其是粗糙度）的因素是熔融焊料因热梯度产生的流动。熔融焊料内部的流动（<span class="key-term">马兰戈尼效应（Marangoni effect）</span>、<span class="key-term">自然对流（natural convection）</span>等）在一定程度上促进 IMC 晶体的生长及其<span class="key-term">剥落（spalling）</span> [16–18]。文献 [19] 确定了热流方向对 SAC305 焊球（在 dummy BGA 上焊接）晶体学取向的影响——顶部及双侧同时加热（上、下加热）会产生更多具有不同晶体学取向的晶核。文献 [20] 描述了直流电流施加于铜表面锡焊料液滴时影响润湿性与 IMC 形成的现象，其机理是马兰戈尼流与<span class="key-term">电迁移（electromigration）</span>的耦合；但马兰戈尼效应与自然对流对 IMC 相反应的贡献比例尚不清楚，需要进一步研究。</p>
+<p>影响 IMC 层厚度的主要因素似乎是熔融焊料中的热迁移。焊接过程中焊球内部不同的热梯度引起 Cu 与 Sn 元素迁移：Cu 向较热端迁移，Sn 向较冷端迁移。这很可能就是 Bottom IR 样品 IMC 层比 both IR 与 top IR 样品更窄的原因 [9]。</p>
+<p>IMC 层粗糙度的测量结果与已知现象一致：如文献 [21] 所述，粗糙度与 IMC 层厚度直接相关。熔融焊料流动对 IMC 层粗糙度的影响有待进一步研究。</p>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>热迁移（thermomigration）——温度梯度驱动的原子输运：</strong>当焊球内存在温度梯度时，金属原子获得方向性扩散驱动力：高温端原子振动态密度高，原子沿温度梯度反向（从热端向冷端）净迁移。对 SAC305/Cu 体系而言，Sn 是焊料中主要扩散物种，向冷端迁移；Cu 则因固溶度梯度与热力学耦合向热端迁移。于是顶部加热（热端在焊球上方、界面在下方偏冷）与底部加热（热端在基板侧、界面直接受热）时，IMC 层处的元素供应方向相反，直接改变 Cu<sub>6</sub>Sn<sub>5</sub> 的生长动力学。这与文献 [9] 报道的「热端 IMC 薄、冷端 IMC 厚」一致，也解释了为何同样的温度曲线（同样的 Q<sub>η</sub>）会因热流方向不同而长出不同厚度的 IMC 层——测量温度相同，不代表各界面处的真实热输入相同。</p>
+</div>
+
+<!-- ═══════════ 7. CONCLUSION ═══════════ -->
+<h2 id="s7">7. 结论</h2>
+<p>本研究的发现如下：</p>
+<ol>
+  <li><strong>温度传感器位置至关重要。</strong>从热源位置（底部、顶部、双侧）角度看，焊接过程中供给的热量对焊球预制件的植球工艺起决定性作用；实测温度与供给热量并不对应——形成 IMC 层所需的热能并不相同。</li>
+  <li>从底部、顶部与双侧三个不同热流方向植球的焊球，其 IMC 层厚度不同：Bottom IR 样品的 IMC 层最薄；对 Top IR 与 Both IR 样品进行统计显著性验证后，可认为二者的 IMC 层厚度相似。</li>
+  <li>IMC 层均方根粗糙度同样呈现显著差异：Bottom IR 样品粗糙度最小，明显小于顶部加热（top IR）与双侧同时加热（both IR）的样品。</li>
+  <li>结合此前在 EMPC 2017 上发表的研究 [19]，可以假设 IMC 层部分地受到浓度梯度与温度梯度引起的熔融焊料流动的影响。</li>
+</ol>
+<div class="insight">
+  <div class="label">Note</div>
+  <p><strong>本文结论对焊接工艺设计的启示：</strong>若目标是把植球工序中 IMC 层的生长压到最低（为后续上板回流留出裕量），底部加热是更优选择——热流经基板传导、梯度更缓，IMC 层薄且平滑。而「测量温度≠热输入」的结论提醒工艺工程师：红外炉中反馈热电偶的位置会系统性偏置温度控制，同一套温度曲线在不同热源布置下并不等价。这为选择性焊接与红外回流设备的工艺窗口设计提供了定量依据。</p>
+</div>
+
+<!-- ═══════════ ACKNOWLEDGEMENTS ═══════════ -->
+<h2 id="ack">致谢（Acknowledgements）</h2>
+<p>本文工作由 IGA 项目 FEKT-S-17-3934（题为「利用微纳技术新发现构建复杂电子电路与传感器应用」）资助。同时感谢 NeVo（Shenmao Technology Inc.）公司为本工作提供焊接材料。</p>
+
+<!-- ═══════════ KEY TAKEAWAYS ═══════════ -->
+<h2 id="sum">核心要点总结</h2>
+<ol>
+  <li>热流方向是植球/重植球工艺中常被忽视、却能系统改变 IMC 层厚度与粗糙度的工艺参数。</li>
+  <li>顶部与双侧红外加热使焊球被辐射直接加热，IMC 层显著增厚（2.715 / 2.573 µm）且更粗糙（1.296 / 1.628 µm）。</li>
+  <li>底部红外加热只经基板间接传热，IMC 层最薄（1.641 µm）、最平滑（0.901 µm）。</li>
+  <li>主要机理为热迁移：焊球内热梯度驱动 Cu 向热端、Sn 向冷端迁移，改变界面处 IMC 生长动力学。</li>
+  <li>反馈热电偶置于封装顶部使「实测温度」与「实际热输入」脱钩——曲线相同不代表焊球受热相同。</li>
+  <li>加热因子 Q<sub>η</sub> 是统一不同加热方向温度曲线、评估热输入与焊点可靠性的实用工具。</li>
+  <li>马兰戈尼效应与自然对流对 IMC 生长的定量贡献仍是开放问题，值得后续研究。</li>
+</ol>
+
+<!-- ═══════════ REFERENCES ═══════════ -->
+<h2 id="refs">参考文献</h2>
+<ol>
+  <li>V. Wirth, K. Rendl and F. Steiner, "Effect of Multiple Reflow Cycles on Intermetallic Compound Creation", 38th International Spring Seminar on Electronics Technology (ISSE), Hungary (Eger), 2015, pp. 226–230.</li>
+  <li>D. Bušek, K. Dušek and O. Renza, "Study of Temperature Profile Influence on Intermetallic Growth", 40th International Spring Seminar on Electronics Technology, Bulgaria (Sofia), 2017, pp. 1–4.</li>
+  <li>M. S. Park and R. Arróyave, "Concurrent Nucleation, Formation and Growth of Two Intermetallic Compounds (Cu6Sn5 and Cu3Sn) during the Early Stages of Lead-Free Soldering", Acta Materialia vol. 60, 2012, pp. 923–934.</li>
+  <li>M. L. Huang and F. Yang, "Solder Size Effect on Early Stage Interfacial Intermetallic Compound Evolution Wetting Reaction of Sn3.0Ag0.5Cu/ENEPIG Joints", Journal of Materials Science and Technology vol. 31, 2015, pp. 252–256.</li>
+  <li>C. E. Ho, R. Y. Tsai, Y. L. Lin and C. R. Kao, "Effect of Cu concentration on the reactions between Sn-Ag-Cu Solders and Ni", Journal of Electronic Materials vol. 31, no. 6, 2002, pp. 584–590.</li>
+  <li>R. Pandher and A. Pachamuthu, "Effect of Multiple Reflow Cycles on Solder Joint Formation and Reliability", SMTA International Conference 2010, pp. 444–449.</li>
+  <li>J. F. J. M. Caers, X. J. Zhao, E. H. Wong, S. K. W. Seah, C. S. Selvanayagam, W. Driel, N. Owens, M. Leoni, L. C. Tan, P. L. Eu, Yi-Shao Lai and Chang-Lin Yeh, "A Study of Crack Propagation in Pb-Free Solder Joints", Electronics Packaging Manufacturing vol. 33, no. 2, Apr 2010, pp. 84–90.</li>
+  <li>D. Wang and R. L. Panton, "Effect of Reversing Heat Flux Direction During Reflow on Void Formation High-Lead Solder Bumps", Journal of Electronic Packaging vol. 127, no. 4, 2005, pp. 440–445.</li>
+  <li>N. Zhao, Y. Zhong, M. L. Huang, H. T. Ma and W. Dong, "Growth Kinetics of Cu6Sn5 Intermetallic Compound at Liquid-Solid Interfaces Cu/Sn/Cu Interconnects under Temperature Gradient", Scientific Reports vol. 5, 2015.</li>
+  <li>B. Tao, Y. Wu, H. Ding and Y. L. Xiong, "A Quantitative Method of Reliability Estimation for Surface Mount Solder Joints based on Heating Factor Qη", Microelectronics Reliability vol. 46, 2006, pp. 864–872.</li>
+  <li>T. An and F. Qin, "Relationship between the Intermetallic Compounds Growth and the Microcracking Behavior of Lead-Free Solder Joints", Journal of Electronic Packaging vol. 138, no. 1, 2015.</li>
+  <li>D. Q. Yu and L. Wang, "The Growth and Roughness Evolution of Intermetallic Compounds of Sn-Ag-Cu/Cu Interface during Soldering Reaction", Journal of Alloys and Compounds vol. 458, no. 1-2, 2008, pp. 542–547.</li>
+  <li>J. G. Gao, Y. P. Wu and H. Ding, "Optimization of a Reflow Soldering Process based on the Heating Factor", Soldering &amp; Surface Mount Technology vol. 19, no. 1, 2007, pp. 28–33.</li>
+  <li>P. Veselý, E. Horynová, J. Starý, D. Bušek, K. Dušek, V. Zahradník, M. Plaček, P. Mach, M. Kučírek, V. Ježek and M. Dosedla, "Solder Joint Quality Evaluation based on Heating Factor", Circuit World vol. 44, no. 1, 2018, pp. 37–44.</li>
+  <li>O. Krammer and M. Nagy, "Reliability Comparison of Infrared and Vapour Phase Soldering", 18th International Symposium for Design and Technology Electronic Packaging (SIITME) 2012, pp. 49–52.</li>
+  <li>Y. C. Sohn, Jin-Yu, S. K. Kang, D. Y. Shih and T. Y. Lee, "Spalling of Intermetallic Compounds during the Reaction between Solders and Electroless Ni-P Metallization", Journal of Materials Research vol. 19, 2004, pp. 2428–2436.</li>
+  <li>Y. Okano, N. Audet, S. Dost and S. Kunikata, "Effect of Liquid Shape on Flow Velocity Induced by Marangoni Convection a Floating Half-Zone System", Journal of Crystal Growth vol. 204, no. 1-2, 1999, pp. 243–246.</li>
+  <li>T. Hurtony, P. Gordon and B. Balogh, "Formation and Distribution of Sn-Cu IMC Lead-Free Soldering Process Induced by Laser Heating", Micro and Nanosystems vol. 2, no. 3, pp. 178–184.</li>
+  <li>A. Otáhal, J. Somer and I. Szendiuch, "Influence of Heating Direction on BGA Solder Balls Structure", 21st European Microelectronics and Packaging Conference (EMPC) &amp; Exhibition, 2017, pp. 1–4.</li>
+  <li>Yan Gu, Ping Shen, Nan-Nan Yang and Kang-Zhan Cao, "Effects of Direct Current on the Wetting Behavior and Interfacial Morphology between Molten Sn and Cu Substrate", Journal of Alloys and Compounds vol. 586, 2014, pp. 80–86.</li>
+  <li>A. S. Zuruzi, S. K. Lahiri, P. Burman and K. S. Siow, "Correlation between Intermetallic Thickness and Roughness During Solder Reflow", Journal of Electronic Materials vol. 30, 2001, pp. 997–1000.</li>
+</ol>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<p style="margin-top:40px;color:var(--text-secondary);font-size:.83rem;border-top:1px solid var(--border);padding-top:16px;">
+文献来源：A. Otáhal, I. Szendiuch. "Influence of heat flow direction on solder ball interfacial layer." <em>Journal of Electrical Engineering</em> 2018, Vol. 69(4), pp. 305–310. DOI: 10.2478/jee-2018-0043. 图片由 MinerU 从原 PDF 提取。
+</p>
+
+</main>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <span class="lightbox-close">&times;</span>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<a class="back-to-top" href="#" title="回到顶部">&uarr;</a>
+
+<script>
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.getElementById('lightbox').classList.remove('active'); });
+</script>
+
+</body>
+</html>
