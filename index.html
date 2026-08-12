@@ -9,10 +9,17 @@
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:"Noto Serif SC","Songti SC",Georgia,serif; background:var(--bg); color:var(--text); line-height:1.7; }
   .wrap { max-width:980px; margin:0 auto; padding:48px 24px 100px; }
-  .page-header { border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:36px; }
+  .page-header { border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:32px; }
   h1 { font-size:1.6rem; color:var(--accent); }
   .sub { font-size:.9rem; color:var(--text2); margin-top:8px; }
-  .section-title { font-size:1.15rem; color:var(--accent); margin:34px 0 16px; padding-left:10px; border-left:4px solid var(--accent); }
+  .tabs { display:flex; gap:6px; border-bottom:2px solid var(--border); margin-bottom:24px; }
+  .tab { padding:10px 26px; border:1px solid var(--border); border-bottom:none; border-radius:6px 6px 0 0;
+          background:#f9f7f2; color:var(--text2); font-family:inherit; font-size:.95rem; cursor:pointer;
+          transition:background .15s, color .15s; }
+  .tab:hover { background:#f1ede4; }
+  .tab.active { background:#fff; color:var(--accent); font-weight:bold; border-color:var(--accent); margin-bottom:-2px; }
+  .panel { display:none; }
+  .panel.active { display:block; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
   .card { display:block; background:#fff; border:1px solid var(--border); border-radius:6px; padding:18px 20px;
            text-decoration:none; color:var(--text); transition:box-shadow .15s, border-color .15s; }
@@ -23,7 +30,7 @@
   .year { font-size:.8rem; color:var(--text2); border:1px solid var(--border); border-radius:12px; padding:1px 10px; }
   .card h2 { font-size:1.02rem; line-height:1.5; margin-bottom:10px; }
   .tag { display:inline-block; font-size:.78rem; color:var(--text2); background:#f9f7f2; border:1px solid var(--border); border-radius:4px; padding:2px 10px; }
-  @media (max-width:640px) { .grid { grid-template-columns:1fr; } }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } .tab { padding:10px 16px; font-size:.88rem; } }
 </style>
 </head>
 <body>
@@ -32,8 +39,12 @@
       <h1>P1–P9 论文资料汇总</h1>
       <p class="sub">红外焊接方向论文精读笔记与汇报幻灯片 · 共 9 篇</p>
     </div>
-    <h2 class="section-title">📚 阅读笔记</h2>
-    <div class="grid">
+    <div class="tabs">
+      <button class="tab active" data-tab="notes">📚 阅读笔记（9）</button>
+      <button class="tab" data-tab="slides">📊 汇报 PPT（9）</button>
+    </div>
+    <div id="notes" class="panel active">
+      <div class="grid">
       <a class="card " href="P1_adrc_prototype_2025.html">
         <div class="card-top"><span class="pid">P1</span><span class="year">2025</span></div>
         <h2>基于自抗扰控制结构的红外电子器件焊接原型系统</h2>
@@ -79,9 +90,10 @@
         <h2>近红外辐射辅助焊接用于柔性混合电子（FHE）</h2>
         <span class="tag">柔性混合电子焊接</span>
       </a>
+      </div>
     </div>
-    <h2 class="section-title">📊 汇报 PPT</h2>
-    <div class="grid">
+    <div id="slides" class="panel">
+      <div class="grid">
       <a class="card ppt" href="https://white-drizzle.github.io/paper-slides/pdf/P1_adrc_prototype_2025.pdf">
         <div class="card-top"><span class="pid">P1</span><span class="year">2025</span></div>
         <h2>PP1 汇报幻灯片</h2>
@@ -127,7 +139,18 @@
         <h2>PP9 汇报幻灯片</h2>
         <span class="tag">柔性混合电子焊接</span>
       </a>
+      </div>
     </div>
   </div>
+<script>
+document.querySelectorAll('.tab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
 </body>
 </html>
