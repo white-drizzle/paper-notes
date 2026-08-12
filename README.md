@@ -1,6 +1,6 @@
-# P1–P9 论文阅读笔记
+# P1–P10 论文阅读笔记
 
-红外焊接方向 9 篇论文的精读笔记，托管于 GitHub Pages。
+红外焊接方向 10 篇论文的精读笔记，托管于 GitHub Pages。
 
 访问入口: https://white-drizzle.github.io/paper-notes/
 
@@ -17,3 +17,4 @@
 | P7 | P7_脉冲光焊_2023_阅读笔记.html | P7_pulsed_light_soldering_2023.html |
 | P8 | P8_低成本电子回流焊_2025_阅读笔记.html | P8_low_cost_reflow_2025.html |
 | P9 | P9_柔性混合电子焊接_2023_阅读笔记.html | P9_flexible_hybrid_electronics_2023.html |
+| P10 | P10_SRP-PINN热曲线模拟_2024.html | P10_srp_pinn_2024.html |
